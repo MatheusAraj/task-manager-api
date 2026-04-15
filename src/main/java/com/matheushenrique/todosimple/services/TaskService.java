@@ -9,8 +9,6 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Optional;
 
-import static org.springframework.data.jpa.domain.AbstractPersistable_.id;
-
 @Service
 public class TaskService {
 

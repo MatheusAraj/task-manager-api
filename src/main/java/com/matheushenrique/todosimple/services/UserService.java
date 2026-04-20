@@ -3,6 +3,8 @@ package com.matheushenrique.todosimple.services;
 import com.matheushenrique.todosimple.models.User;
 import com.matheushenrique.todosimple.repositories.TaskRepository;
 import com.matheushenrique.todosimple.repositories.UserRepository;
+import com.matheushenrique.todosimple.services.exceptions.DataBindingViolationException;
+import com.matheushenrique.todosimple.services.exceptions.ObjectNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -20,7 +22,7 @@ public class UserService {
 
     public User findById(Long id) {
         Optional<User> user = this.userRepository.findById(id);
-        return user.orElseThrow(() -> new RuntimeException(
+        return user.orElseThrow(() -> new ObjectNotFoundException(
                 "Usuário não foi encontrado! Id: " + id + ", Tipo: " + User.class.getName()
         ));
     }
@@ -47,7 +49,7 @@ public class UserService {
 
         } catch (Exception e) {
 
-            throw new RuntimeException("Não é possível excluir devido a dependências existentes!", e);
+            throw new DataBindingViolationException("Não é possível excluir devido a dependências existentes!");
 
         }
     }

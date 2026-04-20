@@ -17,7 +17,7 @@ import java.util.Arrays;
 
 @Configuration
 @EnableWebSecurity
-@EnableGlobalMethodSecurity
+@EnableGlobalMethodSecurity(prePostEnabled = true)
 public class SecurityConfig {
 
     public static final String[] PUBLIC_MATCHERS = {
@@ -29,11 +29,12 @@ public class SecurityConfig {
             "/login"
     };
 
-   public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
+    @Bean
+    public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
 
        http.cors().and().csrf().disable();
 
-       http.authorizeRequests()
+       http.authorizeHttpRequests()
            .antMatchers(HttpMethod.POST, PUBLIC_MATCHERS_POST).permitAll()
            .antMatchers(PUBLIC_MATCHERS).permitAll()
            .anyRequest().authenticated();
